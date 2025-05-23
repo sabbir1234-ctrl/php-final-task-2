@@ -1,0 +1,18 @@
+CREATE DATABASE IF NOT EXISTS passwords_db;
+USE passwords_db;
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    encryption_key VARBINARY(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS passwords (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    site_name VARCHAR(255) NOT NULL,
+    password VARBINARY(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
